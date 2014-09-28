@@ -1,4 +1,4 @@
-package shortener;
+package UrlShortener;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
