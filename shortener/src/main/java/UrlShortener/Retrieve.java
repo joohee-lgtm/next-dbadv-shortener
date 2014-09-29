@@ -21,7 +21,7 @@ public class Retrieve extends HttpServlet
 		{
 			try
 			{
-				longUrl = new Logic().getLongUrl( urlId );
+				longUrl = new MysqlShortener().getLongUrl( urlId );
 			}
 			catch ( Exception e )
 			{

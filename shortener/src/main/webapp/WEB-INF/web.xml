@@ -7,7 +7,7 @@
 
 	<servlet>
 		<servlet-name>Insert</servlet-name>
-		<servlet-class>shortener.Insert</servlet-class>
+		<servlet-class>UrlShortener.Insert</servlet-class>
 		<load-on-startup>-1</load-on-startup>
 	</servlet>
 
@@ -18,7 +18,7 @@
 	
 	<servlet>
 		<servlet-name>Retrieve</servlet-name>
-		<servlet-class>shortener.Retrieve</servlet-class>
+		<servlet-class>UrlShortener.Retrieve</servlet-class>
 		<load-on-startup>-1</load-on-startup>
 	</servlet>
 	

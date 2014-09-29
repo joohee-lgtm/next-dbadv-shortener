@@ -19,11 +19,6 @@ public class Insert extends HttpServlet
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		String longUrl = request.getParameter( "longUrl" );
-		request.getSession().setAttribute( "a", "a" );
-		String a = response.encodeURL( request.getRequestURI() );
-		request.getSession().setAttribute( "a", "a" );
-		System.out.println( "->" + request.getRequestURI() );
-		System.out.println( a );
 		System.out.println( "shortening " + longUrl );
 		String serverName = request.getServerName();
 		int port = request.getServerPort();
@@ -32,7 +27,7 @@ public class Insert extends HttpServlet
 		
 		try
 		{
-			shortUrl = new Logic().getShort( serverName, port, contextPath, longUrl );
+			shortUrl = new MysqlShortener().getShort( serverName, port, contextPath, longUrl );
 		}
 		catch ( Exception e )
 		{
