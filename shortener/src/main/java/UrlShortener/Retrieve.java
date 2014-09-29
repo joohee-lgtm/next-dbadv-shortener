@@ -22,6 +22,7 @@ public class Retrieve extends HttpServlet
 			try
 			{
 				longUrl = new MysqlShortener().getLongUrl( urlId );
+//				longUrl = new RedisShortener().getLongUrl( urlId );
 			}
 			catch ( Exception e )
 			{

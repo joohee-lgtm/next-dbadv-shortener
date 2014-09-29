@@ -6,19 +6,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class MysqlShortener
+public class MysqlShortener implements Logic
 {
+	private Connection connection = null;
+	private String serviceUrl = "http://localhost:8080/shortener/";
+
 	public Connection getConnection() throws IllegalAccessException, ClassNotFoundException, SQLException
 	{
-		String url = "jdbc:mysql://10.73.45.50/url_shortener";
-		Class.forName( "com.mysql.jdbc.Driver" );
-		Connection conn = DriverManager.getConnection( url, "url_shortener", "dlwlsdn1" );
-		return conn;
+		if ( connection == null )
+		{
+			String url = "jdbc:mysql://10.73.45.50/url_shortener";
+			Class.forName( "com.mysql.jdbc.Driver" );
+			connection = DriverManager.getConnection( url, "url_shortener", "dlwlsdn1" );
+		}
+		return connection;
 	}
 	
 	public String getId( String longUrl ) throws Exception
 	{
-		Connection conn = null;
 		ResultSet rs = null;
 		Statement st = null;
 		
@@ -28,8 +33,7 @@ public class MysqlShortener
 		{
 			try
 			{
-				conn = getConnection();
-				st = conn.createStatement();
+				st = getConnection().createStatement();
 				rs = st.executeQuery( query );
 				if ( rs.next() )
 				{
@@ -42,8 +46,6 @@ public class MysqlShortener
 					rs.close();
 				if ( st != null )
 					st.close();
-				if ( conn != null )
-					conn.close();
 			}
 		}
 		catch ( Exception e )
@@ -53,10 +55,10 @@ public class MysqlShortener
 		
 		return id;
 	}
-	
-	public String getShort( String serverName, int port, String contextPath, String longUrl ) throws Exception
+
+	@Override
+	public String getShort( String longUrl ) throws Exception
 	{
-		Connection conn = null;
 		Statement st = null;
 		String id = getId( longUrl );
 		if ( id != null )
@@ -69,23 +71,21 @@ public class MysqlShortener
 			try
 			{
 				System.out.println( sqlInsert );
-				conn = getConnection();
-				st = conn.createStatement();
+				st = getConnection().createStatement();
 				st.execute( sqlInsert );
 			}
 			finally
 			{
 				if ( st != null )
 					st.close();
-				if ( conn != null )
-					conn.close();
 			}
 			id = getId( longUrl );
 		}
 		
-		return "http://" + serverName + ":" + port + contextPath + "/" + id;
+		return serviceUrl + id;
 	}
 	
+	@Override
 	public String getLongUrl( String urlId ) throws Exception
 	{
 		if ( urlId.startsWith("/") )
@@ -94,15 +94,14 @@ public class MysqlShortener
 		}
 		String query = "SELECT long_url FROM url_data WHERE id = " + urlId;
 		String longUrl = null;
-		Connection conn = null;
 		ResultSet rs = null;
 		Statement st = null;
 		
 		try
 		{
 			System.out.println( query );
-			conn = getConnection();
-			st = conn.createStatement();
+			connection = getConnection();
+			st = connection.createStatement();
 			rs = st.executeQuery( query );
 			if ( rs.next() )
 			{
@@ -115,8 +114,6 @@ public class MysqlShortener
 				rs.close();
 			if ( st != null )
 				st.close();
-			if ( conn != null )
-				conn.close();
 		}
 		
 		return longUrl;

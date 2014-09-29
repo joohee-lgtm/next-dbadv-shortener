@@ -20,14 +20,12 @@ public class Insert extends HttpServlet
 	{
 		String longUrl = request.getParameter( "longUrl" );
 		System.out.println( "shortening " + longUrl );
-		String serverName = request.getServerName();
-		int port = request.getServerPort();
-		String contextPath = request.getContextPath();
 		String shortUrl = null;
 		
 		try
 		{
-			shortUrl = new MysqlShortener().getShort( serverName, port, contextPath, longUrl );
+			shortUrl = new MysqlShortener().getShort( longUrl );
+//			shortUrl = new RedisShortener().getShort( longUrl );
 		}
 		catch ( Exception e )
 		{
