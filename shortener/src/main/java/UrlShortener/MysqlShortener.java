@@ -9,7 +9,12 @@ import java.sql.Statement;
 public class MysqlShortener implements Logic
 {
 	private Connection connection = null;
-	private String serviceUrl = "http://localhost:8080/shortener/";
+	private String serviceUrl;
+	
+	public MysqlShortener( String serviceUrl )
+	{
+		this.serviceUrl = serviceUrl;
+	}
 
 	public Connection getConnection() throws IllegalAccessException, ClassNotFoundException, SQLException
 	{
@@ -31,26 +36,19 @@ public class MysqlShortener implements Logic
 		String id = null;
 		try
 		{
-			try
+			st = getConnection().createStatement();
+			rs = st.executeQuery( query );
+			if ( rs.next() )
 			{
-				st = getConnection().createStatement();
-				rs = st.executeQuery( query );
-				if ( rs.next() )
-				{
-					id = rs.getString( "id" );
-				}
-			}
-			finally
-			{
-				if ( rs != null )
-					rs.close();
-				if ( st != null )
-					st.close();
+				id = rs.getString( "id" );
 			}
 		}
-		catch ( Exception e )
+		finally
 		{
-			throw e;
+			if ( rs != null )
+				rs.close();
+			if ( st != null )
+				st.close();
 		}
 		
 		return id;

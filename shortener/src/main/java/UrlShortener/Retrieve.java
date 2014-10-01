@@ -21,8 +21,9 @@ public class Retrieve extends HttpServlet
 		{
 			try
 			{
-				longUrl = new MysqlShortener().getLongUrl( urlId );
-//				longUrl = new RedisShortener().getLongUrl( urlId );
+				String serviceUrl = request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+//				longUrl = new MysqlShortener( serviceUrl ).getLongUrl( urlId );
+				longUrl = new RedisShortener( serviceUrl ).getLongUrl( urlId );
 			}
 			catch ( Exception e )
 			{

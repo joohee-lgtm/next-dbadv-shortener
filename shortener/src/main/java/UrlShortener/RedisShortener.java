@@ -8,10 +8,9 @@ public class RedisShortener implements Logic {
 
 	private Shortener numberShortener;
 
-	public RedisShortener()
+	public RedisShortener( String serviceUrl )
 	{
-		Jedis jedis = new Jedis("10.73.45.73");
-		String serviceUrl = "http://localhost:8080/";
+		Jedis jedis = new Jedis("10.73.45.50");
 		
 		numberShortener = new ShortenerNumber(jedis, serviceUrl);
 	}

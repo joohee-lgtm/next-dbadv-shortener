@@ -1,0 +1,16 @@
+USE url_shortener;
+
+DROP TABLE IF EXISTS url_data;
+CREATE TABLE url_data (
+	id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+	long_url TEXT NOT NULL,
+	PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS dump_data;
+CREATE TABLE dump_data (
+	id BIGINT(20) UNSIGNED NOT NULL,
+	long_url TEXT NOT NULL,
+	PRIMARY KEY (id)
+);
+

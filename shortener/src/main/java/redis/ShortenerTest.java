@@ -4,7 +4,7 @@ import redis.clients.jedis.Jedis;
 
 public class ShortenerTest {
 	public static void test() {
-		Jedis jedis = new Jedis("10.73.45.73");
+		Jedis jedis = new Jedis("10.73.45.50");
 		String serviceUrl = "http://redis.st/";
 		
 		Shortener ns = new ShortenerNumber(jedis, serviceUrl);

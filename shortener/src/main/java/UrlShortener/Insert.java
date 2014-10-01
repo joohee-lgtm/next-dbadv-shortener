@@ -24,8 +24,9 @@ public class Insert extends HttpServlet
 		
 		try
 		{
-			shortUrl = new MysqlShortener().getShort( longUrl );
-//			shortUrl = new RedisShortener().getShort( longUrl );
+			String serviceUrl = request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+//			shortUrl = new MysqlShortener( serviceUrl ).getShort( longUrl );
+			shortUrl = new RedisShortener( serviceUrl ).getShort( longUrl );
 		}
 		catch ( Exception e )
 		{
