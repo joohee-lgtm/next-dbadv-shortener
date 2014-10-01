@@ -68,7 +68,7 @@ public class MysqlShortener implements Logic
 			String sqlInsert = "INSERT INTO url_data( long_url ) VALUES( '" + longUrl.trim() + "')";
 			try
 			{
-				System.out.println( sqlInsert );
+//				System.out.println( sqlInsert );
 				st = getConnection().createStatement();
 				st.execute( sqlInsert );
 			}
@@ -97,7 +97,7 @@ public class MysqlShortener implements Logic
 		
 		try
 		{
-			System.out.println( query );
+//			System.out.println( query );
 			connection = getConnection();
 			st = connection.createStatement();
 			rs = st.executeQuery( query );
